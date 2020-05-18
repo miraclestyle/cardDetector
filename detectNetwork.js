@@ -65,6 +65,11 @@ var detectNetwork = function(cardNumber) {
     'prefixes': {
       '6011': true,
       '644-649': true,
+      '645': true,
+      '646': true,
+      '647': true,
+      '648': true,
+      '649': true,
       '65': true
     }
   };
@@ -99,7 +104,12 @@ var detectNetwork = function(cardNumber) {
     '55': mastercard,
     '4': visa,
     '6011': discover,
-    '644-649': discover,
+    '644': discover,
+    '645': discover,
+    '646': discover,
+    '647': discover,
+    '648': discover,
+    '649': discover,
     '65': discover,
     '5018': maestro,
     '5020': maestro,
@@ -107,7 +117,7 @@ var detectNetwork = function(cardNumber) {
     '6304': maestro
   };
   // Find the card network
-  var prefixLengths = [1, 2, 4, 7];
+  var prefixLengths = [1, 2, 3, 4];
   var length = cardNumber.length.toString();
   var tokens = [];
   for (let i = 0; i < prefixLengths.length; i++) {
