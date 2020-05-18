@@ -167,5 +167,107 @@ describe('Discover', function() {
 
 describe('Maestro', function() {
   // Write full test coverage for the Maestro card
+  var assert = chai.assert;
+  var fail = 'Test Failed';
+
+  it('has a prefix of 5018 and a length of 12', function() {
+    assert(detectNetwork('501812345678') === 'Maestro', fail);
+  });
+  it('has a prefix of 5018 and a length of 13', function() {
+    assert(detectNetwork('5018123456789') === 'Maestro', fail);
+  });
+  it('has a prefix of 5018 and a length of 14', function() {
+    assert(detectNetwork('50181234567890') === 'Maestro', fail);
+  });
+  it('has a prefix of 5018 and a length of 15', function() {
+    assert(detectNetwork('501812345678901') === 'Maestro', fail);
+  });
+  it('has a prefix of 5018 and a length of 16', function() {
+    assert(detectNetwork('5018123456789012') === 'Maestro', fail);
+  });
+  it('has a prefix of 5018 and a length of 17', function() {
+    assert(detectNetwork('50181234567890123') === 'Maestro', fail);
+  });
+  it('has a prefix of 5018 and a length of 18', function() {
+    assert(detectNetwork('501812345678901234') === 'Maestro', fail);
+  });
+  it('has a prefix of 5018 and a length of 19', function() {
+    assert(detectNetwork('5018123456789012345') === 'Maestro', fail);
+  });
+
+  it('has a prefix of 5020 and a length of 12', function() {
+    assert(detectNetwork('502012345678') === 'Maestro', fail);
+  });
+  it('has a prefix of 5020 and a length of 13', function() {
+    assert(detectNetwork('5020123456789') === 'Maestro', fail);
+  });
+  it('has a prefix of 5020 and a length of 14', function() {
+    assert(detectNetwork('50201234567890') === 'Maestro', fail);
+  });
+  it('has a prefix of 5020 and a length of 15', function() {
+    assert(detectNetwork('502012345678901') === 'Maestro', fail);
+  });
+  it('has a prefix of 5020 and a length of 16', function() {
+    assert(detectNetwork('5020123456789012') === 'Maestro', fail);
+  });
+  it('has a prefix of 5020 and a length of 17', function() {
+    assert(detectNetwork('50201234567890123') === 'Maestro', fail);
+  });
+  it('has a prefix of 5020 and a length of 18', function() {
+    assert(detectNetwork('502012345678901234') === 'Maestro', fail);
+  });
+  it('has a prefix of 5020 and a length of 19', function() {
+    assert(detectNetwork('5020123456789012345') === 'Maestro', fail);
+  });
+
+  it('has a prefix of 5038 and a length of 12', function() {
+    assert(detectNetwork('503812345678') === 'Maestro', fail);
+  });
+  it('has a prefix of 5038 and a length of 13', function() {
+    assert(detectNetwork('5038123456789') === 'Maestro', fail);
+  });
+  it('has a prefix of 5038 and a length of 14', function() {
+    assert(detectNetwork('50381234567890') === 'Maestro', fail);
+  });
+  it('has a prefix of 5038 and a length of 15', function() {
+    assert(detectNetwork('503812345678901') === 'Maestro', fail);
+  });
+  it('has a prefix of 5038 and a length of 16', function() {
+    assert(detectNetwork('5038123456789012') === 'Maestro', fail);
+  });
+  it('has a prefix of 5038 and a length of 17', function() {
+    assert(detectNetwork('50381234567890123') === 'Maestro', fail);
+  });
+  it('has a prefix of 5038 and a length of 18', function() {
+    assert(detectNetwork('503812345678901234') === 'Maestro', fail);
+  });
+  it('has a prefix of 5038 and a length of 19', function() {
+    assert(detectNetwork('5038123456789012345') === 'Maestro', fail);
+  });
+
+  it('has a prefix of 6304 and a length of 12', function() {
+    assert(detectNetwork('630412345678') === 'Maestro', fail);
+  });
+  it('has a prefix of 6304 and a length of 13', function() {
+    assert(detectNetwork('6304123456789') === 'Maestro', fail);
+  });
+  it('has a prefix of 6304 and a length of 14', function() {
+    assert(detectNetwork('63041234567890') === 'Maestro', fail);
+  });
+  it('has a prefix of 6304 and a length of 15', function() {
+    assert(detectNetwork('630412345678901') === 'Maestro', fail);
+  });
+  it('has a prefix of 6304 and a length of 16', function() {
+    assert(detectNetwork('6304123456789012') === 'Maestro', fail);
+  });
+  it('has a prefix of 6304 and a length of 17', function() {
+    assert(detectNetwork('63041234567890123') === 'Maestro', fail);
+  });
+  it('has a prefix of 6304 and a length of 18', function() {
+    assert(detectNetwork('630412345678901234') === 'Maestro', fail);
+  });
+  it('has a prefix of 6304 and a length of 19', function() {
+    assert(detectNetwork('6304123456789012345') === 'Maestro', fail);
+  });
 });
 
