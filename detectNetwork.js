@@ -16,7 +16,7 @@ var detectNetwork = function(cardNumber) {
 
   // Build our case structure
   // JS objects return undefined for non-existing props by default
-  var result = {
+  var cards = {
     '3814': "Diner's Club",
     '3914': "Diner's Club",
     '3415': "American Express",
@@ -28,20 +28,31 @@ var detectNetwork = function(cardNumber) {
     '5516': "MasterCard",
     '413': "Visa",
     '416': "Visa",
-    '419': "Visa"
+    '419': "Visa",
+    '601116': "Discover",
+    '601119': "Discover",
+    '644-64916': "Discover",
+    '644-64919': "Discover",
+    '6516': "Discover",
+    '6519': "Discover"
   };
-  // Extract first prefixes and calcualte lenght
-  var prefixOne = cardNumber.substr(0, 1);
-  var prefixTwo = cardNumber.substr(0, 2);
+  // Build tokens from prefixes and lenght
+  var prefixLengths = [1, 2, 4, 7];
   var length = cardNumber.length.toString();
-  // Build token
-  var tokenOne = prefixOne+length;
-  var tokenTwo = prefixTwo+length;
-  if (result[tokenOne] === undefined) {
-    return result[tokenTwo];
-  } else {
-    return result[tokenOne]
+  var tokens = [];
+  for (let i = 0; i < prefixLengths.length; i++) {
+    let l = prefixLengths[i];
+    let prefix = cardNumber.substr(0, l);
+    tokens.push(prefix+length);
   }
+  // Find the card network
+  var i = 0;
+  var result;
+  while (i < 4 && result === undefined) {
+    result = cards[tokens[i]];
+    i = i + 1;
+  }
+  return result;
 };
 
 
