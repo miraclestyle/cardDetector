@@ -14,45 +14,110 @@ var detectNetwork = function(cardNumber) {
 
   // Once you've read this, go ahead and try to implement this function, then return to the console.
 
-  // Build our case structure
-  // JS objects return undefined for non-existing props by default
-  var cards = {
-    '3814': "Diner's Club",
-    '3914': "Diner's Club",
-    '3415': "American Express",
-    '3715': "American Express",
-    '5116': "MasterCard",
-    '5216': "MasterCard",
-    '5316': "MasterCard",
-    '5416': "MasterCard",
-    '5516': "MasterCard",
-    '413': "Visa",
-    '416': "Visa",
-    '419': "Visa",
-    '601116': "Discover",
-    '601119': "Discover",
-    '644-64916': "Discover",
-    '644-64919': "Discover",
-    '6516': "Discover",
-    '6519': "Discover"
+  // Build our cards structure
+  // Objects can get us the fastest access to the data that we are looking for
+  // Objects return undefined for non-existing props by default
+  var diners = {
+    'name': "Diner's Club",
+    'lengths': {
+      '14': true,
+      '15': true
+    },
+    'prefixes': {
+      '38': true,
+      '39': true
+    }
   };
-  // Build tokens from prefixes and lenght
+  var amex = {
+    'name': "American Express",
+    'lengths': {'15': true},
+    'prefixes': {
+      '34': true,
+      '37': true
+    }
+  };
+  var mastercard = {
+    'name': "MasterCard",
+    'lengths': {'16': true},
+    'prefixes': {
+      '51': true,
+      '52': true,
+      '53': true,
+      '54': true,
+      '55': true
+    }
+  };
+  var visa = {
+    'name': "Visa",
+    'lengths': {
+      '13': true,
+      '16': true,
+      '19': true
+    },
+    'prefixes': {'4': true}
+  };
+  var discover = {
+    'name': "Discover",
+    'lengths': {
+      '16': true,
+      '19': true
+    },
+    'prefixes': {
+      '6011': true,
+      '644-649': true,
+      '65': true
+    }
+  };
+  var maestro = {
+    'name': "Maestro",
+    'lengths': {
+      '12': true,
+      '13': true,
+      '14': true,
+      '15': true,
+      '16': true,
+      '17': true,
+      '18': true,
+      '19': true
+    },
+    'prefixes': {
+      '5018': true,
+      '5020': true,
+      '5038': true,
+      '6304': true
+    }
+  };
+  var cards = {
+    '38': diners,
+    '39': diners,
+    '34': amex,
+    '37': amex,
+    '51': mastercard,
+    '52': mastercard,
+    '53': mastercard,
+    '54': mastercard,
+    '55': mastercard,
+    '4': visa,
+    '6011': discover,
+    '644-649': discover,
+    '65': discover,
+    '5018': maestro,
+    '5020': maestro,
+    '5038': maestro,
+    '6304': maestro
+  };
+  // Find the card network
   var prefixLengths = [1, 2, 4, 7];
   var length = cardNumber.length.toString();
   var tokens = [];
   for (let i = 0; i < prefixLengths.length; i++) {
     let l = prefixLengths[i];
     let prefix = cardNumber.substr(0, l);
-    tokens.push(prefix+length);
+    let card = cards[prefix];
+    if (card !== undefined && card.lengths[length] !== undefined) {
+      return card.name;
+    }
   }
-  // Find the card network
-  var i = 0;
-  var result;
-  while (i < 4 && result === undefined) {
-    result = cards[tokens[i]];
-    i = i + 1;
-  }
-  return result;
 };
 
 
