@@ -85,19 +85,19 @@ describe('Visa', function() {
   // Chai provides an assert that acts the same as our previous assert.
   // Search the documentation to figure out how to access it.
   //   http://chaijs.com/
-  var assert = chai.FILL_ME_IN;
+  var assert = chai.assert;
 
 
   it('has a prefix of 4 and a length of 13', function() {
-    assert(detectNetwork('4123456789012') === 'Visa');
+    assert(detectNetwork('4123456789012') === 'Visa', 'Test failed');
   });
 
   it('has a prefix of 4 and a length of 16', function() {
-    assert(detectNetwork('4123456789012345') === 'Visa');
+    assert(detectNetwork('4123456789012345') === 'Visa', 'Test failed');
   });
 
   it('has a prefix of 4 and a length of 19', function() {
-    assert(detectNetwork('4123456789012345678') === 'Visa');
+    assert(detectNetwork('4123456789012345678') === 'Visa', 'Test failed');
   });
 });
 
