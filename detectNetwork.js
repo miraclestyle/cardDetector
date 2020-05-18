@@ -20,14 +20,28 @@ var detectNetwork = function(cardNumber) {
     '3814': "Diner's Club",
     '3914': "Diner's Club",
     '3415': "American Express",
-    '3715': "American Express"
+    '3715': "American Express",
+    '5116': "MasterCard",
+    '5216': "MasterCard",
+    '5316': "MasterCard",
+    '5416': "MasterCard",
+    '5516': "MasterCard",
+    '413': "Visa",
+    '416': "Visa",
+    '419': "Visa"
   };
-  // Extract first two digits and lenght
-  var prefix = cardNumber.substr(0, 2);
+  // Extract first prefixes and calcualte lenght
+  var prefixOne = cardNumber.substr(0, 1);
+  var prefixTwo = cardNumber.substr(0, 2);
   var length = cardNumber.length.toString();
   // Build token
-  var token = prefix+length;
-  return result[token];
+  var tokenOne = prefixOne+length;
+  var tokenTwo = prefixTwo+length;
+  if (result[tokenOne] === undefined) {
+    return result[tokenTwo];
+  } else {
+    return result[tokenOne]
+  }
 };
 
 
