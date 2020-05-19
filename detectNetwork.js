@@ -19,18 +19,28 @@ var getLength = function(cardNumber) {
   return cardNumber.length;
 };
 
+
 // Test if the given cardNumber matches the card definition
+
+// Since we are dealing with numerical characters (base 10) in strings,
+// one way to improve the time complexity of card detection is to build
+// an R-way trie data structure (no more than 10 child nodes per root)
+// from the card prefixes, and query it with decreasing prefix lengths
+// in order to solve the first loop in this method.
 var isValid = function(card, cardNumber) {
   var len = getLength(cardNumber);
   for (let i = 0; i < card.prefixes.length; i++) {
+    let pLo = card.prefixes[i].lo;
+    let pHi = card.prefixes[i].hi;
+    let pLen = pLo.toString().length;
+    let pre = getPrefix(cardNumber, pLen);
+    if (!inRange(pre, pLo, pHi)) {
+      continue;
+    }
     for (let j = 0; j < card.lengths.length; j++) {
-      let pLo = card.prefixes[i].lo;
-      let pHi = card.prefixes[i].hi;
       let lLo = card.lengths[j].lo;
       let lHi = card.lengths[j].hi;
-      let pLen = pLo.toString().length;
-      let pre = getPrefix(cardNumber, pLen);
-      if (inRange(pre, pLo, pHi) && inRange(len, lLo, lHi)) {
+      if (inRange(len, lLo, lHi)) {
         return true;
       }
     }
