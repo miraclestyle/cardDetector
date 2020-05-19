@@ -20,15 +20,16 @@ var getLength = function(cardNumber) {
 };
 
 var isValid = function(card, cardNumber) {
-  var pre = getPrefix(cardNumber, card.prefixLength);
   var len = getLength(cardNumber);
   for (let i = 0; i < card.prefixes.length; i++) {
     for (let j = 0; j < card.lengths.length; j++) {
-      let preLo = card.prefixes[i].lo;
-      let preHi = card.prefixes[i].hi;
-      let lenLo = card.lengths[j].lo;
-      let lenHi = card.lengths[j].hi;
-      if (inRange(pre, preLo, preHi) && inRange(len, lenLo, lenHi)) {
+      let pLo = card.prefixes[i].lo;
+      let pHi = card.prefixes[i].hi;
+      let lLo = card.lengths[j].lo;
+      let lHi = card.lengths[j].hi;
+      let pLen = pLo.toString().length;
+      let pre = getPrefix(cardNumber, pLen);
+      if (inRange(pre, pLo, pHi) && inRange(len, lLo, lHi)) {
         return true;
       }
     }
@@ -43,113 +44,62 @@ var detectNetwork = function(cardNumber) {
 
   // Once you've read this, go ahead and try to implement this function, then return to the console.
 
-  // Build our cards structure
-  // Objects can get us the fastest access to the data that we are looking for
-  // Objects return undefined for non-existing props by default
-  var diners = {
-    'name': "Diner's Club",
-    'prefixLength': 2,
-    'prefixes': [{'lo': 38, 'hi': 39}],
-    'lengths': [{'lo': 14, 'hi': 15}]
-  };
-  var amex = {
-    'name': "American Express",
-    'lengths': {'15': true},
-    'prefixes': {
-      '34': true,
-      '37': true
-    }
-  };
-  var mastercard = {
-    'name': "MasterCard",
-    'lengths': {'16': true},
-    'prefixes': {
-      '51': true,
-      '52': true,
-      '53': true,
-      '54': true,
-      '55': true
-    }
-  };
-  var visa = {
-    'name': "Visa",
-    'lengths': {
-      '13': true,
-      '16': true,
-      '19': true
+  // Build our card definitions
+  var cards = [
+    {
+      'name': "Maestro",
+      'prefixes': [
+        {'lo': 5018, 'hi': 5018},
+        {'lo': 5020, 'hi': 5020},
+        {'lo': 5038, 'hi': 5038},
+        {'lo': 6304, 'hi': 6304},
+      ],
+      'lengths': [{'lo': 12, 'hi': 19}]
     },
-    'prefixes': {'4': true}
-  };
-  var discover = {
-    'name': "Discover",
-    'lengths': {
-      '16': true,
-      '19': true
+    {
+      'name': "Discover",
+      'prefixes': [
+        {'lo': 6011, 'hi': 6011},
+        {'lo': 644, 'hi': 649},
+        {'lo': 65, 'hi': 65}
+      ],
+      'lengths': [
+        {'lo': 16, 'hi': 16},
+        {'lo': 19, 'hi': 19}
+      ]
     },
-    'prefixes': {
-      '6011': true,
-      '644-649': true,
-      '645': true,
-      '646': true,
-      '647': true,
-      '648': true,
-      '649': true,
-      '65': true
-    }
-  };
-  var maestro = {
-    'name': "Maestro",
-    'lengths': {
-      '12': true,
-      '13': true,
-      '14': true,
-      '15': true,
-      '16': true,
-      '17': true,
-      '18': true,
-      '19': true
+    {
+      'name': "MasterCard",
+      'prefixes': [{'lo': 51, 'hi': 55}],
+      'lengths': [{'lo': 16, 'hi': 16}]
     },
-    'prefixes': {
-      '5018': true,
-      '5020': true,
-      '5038': true,
-      '6304': true
-    }
-  };
-  var cards = {
-    '38': diners,
-    '39': diners,
-    '34': amex,
-    '37': amex,
-    '51': mastercard,
-    '52': mastercard,
-    '53': mastercard,
-    '54': mastercard,
-    '55': mastercard,
-    '4': visa,
-    '6011': discover,
-    '644': discover,
-    '645': discover,
-    '646': discover,
-    '647': discover,
-    '648': discover,
-    '649': discover,
-    '65': discover,
-    '5018': maestro,
-    '5020': maestro,
-    '5038': maestro,
-    '6304': maestro
-  };
+    {
+      'name': "American Express",
+      'prefixes': [
+        {'lo': 34, 'hi': 34},
+        {'lo': 37, 'hi': 37}
+      ],
+      'lengths': [{'lo': 15, 'hi': 15}]
+    },
+    {
+      'name': "Diner's Club",
+      'prefixes': [{'lo': 38, 'hi': 39}],
+      'lengths': [{'lo': 14, 'hi': 15}]
+    },
+    {
+      'name': "Visa",
+      'prefixes': [{'lo': 4, 'hi': 4}],
+      'lengths': [
+        {'lo': 13, 'hi': 13},
+        {'lo': 16, 'hi': 16},
+        {'lo': 19, 'hi': 19}
+      ]
+    },
+  ];
   // Find the card network
-  var prefixLengths = [4, 3, 2, 1];
-  var length = cardNumber.length.toString();
-  var tokens = [];
-  for (let i = 0; i < prefixLengths.length; i++) {
-    let l = prefixLengths[i];
-    let prefix = cardNumber.substr(0, l);
-    let card = cards[prefix];
-    if (card !== undefined && card.lengths[length] !== undefined) {
-      return card.name;
+  for (let i = 0; i < cards.length; i++) {
+    if (isValid(cards[i], cardNumber)) {
+      return cards[i].name;
     }
   }
 };
