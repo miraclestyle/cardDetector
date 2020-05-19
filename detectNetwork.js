@@ -19,16 +19,21 @@ var getLength = function(cardNumber) {
   return cardNumber.length;
 };
 
-var isDiners = function(cardNumber) {
-  var pre = getPrefix(cardNumber, 2);
+var isValid = function(card, cardNumber) {
+  var pre = getPrefix(cardNumber, card.prefixLength);
   var len = getLength(cardNumber);
-  return inRange(pre, 38, 39) && inRange(len, 14, 15);
-};
-
-var isAmex = function(cardNumber) {
-  var pre = getPrefix(cardNumber, 2);
-  var len = getLength(cardNumber);
-  return (inRange(pre, 34, 34) || inRange(pre, 37, 37)) && inRange(len, 15);
+  for (let i = 0; i < card.prefixes.length; i++) {
+    for (let j = 0; j < card.lengths.length; j++) {
+      let preLo = card.prefixes[i].lo;
+      let preHi = card.prefixes[i].hi;
+      let lenLo = card.lengths[j].lo;
+      let lenHi = card.lengths[j].hi;
+      if (inRange(pre, preLo, preHi) && inRange(len, lenLo, lenHi)) {
+        return true;
+      }
+    }
+  }
+  return false;
 };
 
 var detectNetwork = function(cardNumber) {
@@ -43,14 +48,9 @@ var detectNetwork = function(cardNumber) {
   // Objects return undefined for non-existing props by default
   var diners = {
     'name': "Diner's Club",
-    'lengths': {
-      '14': true,
-      '15': true
-    },
-    'prefixes': {
-      '38': true,
-      '39': true
-    }
+    'prefixLength': 2,
+    'prefixes': [{'lo': 38, 'hi': 39}],
+    'lengths': [{'lo': 14, 'hi': 15}]
   };
   var amex = {
     'name': "American Express",
