@@ -201,7 +201,37 @@ describe('Maestro', function() {
       assert(detectNetwork(num6304) === 'Maestro', fail);
     });
   }
-
-
 });
 
+describe('China UnionPay', function() {
+  var assert = chai.assert;
+  var fail = 'Test Failed';
+
+  for (let prefix = 622126; prefix <= 622925; prefix++) {
+    for (let len = 16; len <= 19; len++) {
+      let msg = `has a prefix of ${prefix} and a length of ${len}`;
+      let num = prefix.toString() + '1234567890123'.substr(0, len-6);
+      it(msg, function() {
+        assert(detectNetwork(num) === 'China UnionPay', fail);
+      });
+    }
+  }
+  for (let prefix = 624; prefix <= 626; prefix++) {
+    for (let len = 16; len <= 19; len++) {
+      let msg = `has a prefix of ${prefix} and a length of ${len}`;
+      let num = prefix.toString() + '1234567890123456'.substr(0, len-3);
+      it(msg, function() {
+        assert(detectNetwork(num) === 'China UnionPay', fail);
+      });
+    }
+  }
+  for (let prefix = 6282; prefix <= 6288; prefix++) {
+    for (let len = 16; len <= 19; len++) {
+      let msg = `has a prefix of ${prefix} and a length of ${len}`;
+      let num = prefix.toString() + '123456789012345'.substr(0, len-4);
+      it(msg, function() {
+        assert(detectNetwork(num) === 'China UnionPay', fail);
+      });
+    }
+  }
+});
