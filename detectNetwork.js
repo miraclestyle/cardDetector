@@ -19,6 +19,7 @@ var getLength = function(cardNumber) {
   return cardNumber.length;
 };
 
+// Test if the given cardNumber matches the card definition
 var isValid = function(card, cardNumber) {
   var len = getLength(cardNumber);
   for (let i = 0; i < card.prefixes.length; i++) {
@@ -46,6 +47,33 @@ var detectNetwork = function(cardNumber) {
 
   // Build our card definitions
   var cards = [
+    {
+      'name': "China UnionPay",
+      'prefixes': [
+        {'lo': 622126, 'hi': 622925},
+        {'lo': 624, 'hi': 626},
+        {'lo': 6282, 'hi': 6288}
+      ],
+      'lengths': [{'lo': 16, 'hi': 19}]
+    },
+    {
+      'name': "Switch",
+      'prefixes': [
+        {'lo': 4903, 'hi': 4903},
+        {'lo': 4905, 'hi': 4905},
+        {'lo': 4911, 'hi': 4911},
+        {'lo': 4936, 'hi': 4936},
+        {'lo': 564182, 'hi': 564182},
+        {'lo': 633110, 'hi': 633110},
+        {'lo': 6333, 'hi': 6333},
+        {'lo': 6759, 'hi': 6759},
+      ],
+      'lengths': [
+        {'lo': 16, 'hi': 16},
+        {'lo': 18, 'hi': 18},
+        {'lo': 19, 'hi': 19},
+      ]
+    },
     {
       'name': "Maestro",
       'prefixes': [
@@ -103,5 +131,3 @@ var detectNetwork = function(cardNumber) {
     }
   }
 };
-
-
