@@ -164,6 +164,14 @@ describe('Discover', function() {
       expect(detectNetwork(num19)).to.equal('Discover');
     });
   }
+
+  it('has a prefix of 65 and a length of 16', function() {
+    expect(detectNetwork('6512345678901234')).to.equal('Discover');
+  });
+  it('has a prefix of 65 and a length of 19', function() {
+    expect(detectNetwork('6512345678901234567')).to.equal('Discover');
+  });
+
 });
 
 describe('Maestro', function() {
@@ -193,5 +201,7 @@ describe('Maestro', function() {
       assert(detectNetwork(num6304) === 'Maestro', fail);
     });
   }
+
+
 });
 
