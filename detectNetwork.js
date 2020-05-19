@@ -7,6 +7,16 @@
 //   1. The first few numbers (called the prefix)
 //   2. The number of digits in the number (called the length)
 
+var inRange = function(num, lo, hi) {
+  return num >= lo && num <= hi;
+};
+
+var isDiners = function(cardNumber) {
+  var pref = Number(cardNumber.substr(0, 2));
+  var len = cardNumber.length;
+  return inRange(pref, 38, 39) && inRange(len, 14, 15);
+}
+
 var detectNetwork = function(cardNumber) {
   // Note: `cardNumber` will always be a string
   // The Diner's Club network always starts with a 38 or 39 and is 14 digits long
@@ -117,7 +127,7 @@ var detectNetwork = function(cardNumber) {
     '6304': maestro
   };
   // Find the card network
-  var prefixLengths = [1, 2, 3, 4];
+  var prefixLengths = [4, 3, 2, 1];
   var length = cardNumber.length.toString();
   var tokens = [];
   for (let i = 0; i < prefixLengths.length; i++) {
