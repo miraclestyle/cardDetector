@@ -11,11 +11,25 @@ var inRange = function(num, lo, hi) {
   return num >= lo && num <= hi;
 };
 
+var getPrefix = function(cardNumber, length) {
+  return Number(cardNumber.substr(0, length));
+};
+
+var getLength = function(cardNumber) {
+  return cardNumber.length;
+};
+
 var isDiners = function(cardNumber) {
-  var pref = Number(cardNumber.substr(0, 2));
-  var len = cardNumber.length;
-  return inRange(pref, 38, 39) && inRange(len, 14, 15);
-}
+  var pre = getPrefix(cardNumber, 2);
+  var len = getLength(cardNumber);
+  return inRange(pre, 38, 39) && inRange(len, 14, 15);
+};
+
+var isAmex = function(cardNumber) {
+  var pre = getPrefix(cardNumber, 2);
+  var len = getLength(cardNumber);
+  return (inRange(pre, 34, 34) || inRange(pre, 37, 37)) && inRange(len, 15);
+};
 
 var detectNetwork = function(cardNumber) {
   // Note: `cardNumber` will always be a string
