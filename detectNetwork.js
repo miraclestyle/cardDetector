@@ -159,6 +159,13 @@ function cardFinder(cards) {
 }
 
 // Build trie and produce card finding function
+// We can assume that most of the time consumed for running
+// this script is in fact running this function.
+// The assumption comes from the fact that this function runs in
+// (C*P*l) + (C*L), where C is the number of card definitions,
+// P is the entire range of prefixes for a given card definition,
+// l is the length of each prefix in the prefix range for a given card definition,
+// and L is the entire range of card number lengths for a given card definition.
 var findCard = cardFinder(cards);
 
 var detectNetwork = function(cardNumber) {
