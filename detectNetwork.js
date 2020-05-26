@@ -103,7 +103,7 @@ function cardFinder(cards) {
     if (node === undefined) { return val; }
     if (node.val !== undefined) { val = node.val; }
     if (i === key.length) { return val; }
-    c = key[i];
+    var c = key[i];
     return _get(node.next[c], key, i+1, val);
   }
 
@@ -112,7 +112,7 @@ function cardFinder(cards) {
     if (i === key.length) {
       node.val = val;
     } else {
-      c = key[i];
+      var c = key[i];
       node.next[c] = _put(node.next[c], key, val, i+1);
     }
     return node;
